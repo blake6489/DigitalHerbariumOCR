@@ -2,8 +2,16 @@
 #include <iostream>
 
 
+#ifndef LOADTIFF_H
+#define LOADTIFF_H
 
-char * loadTiff(string file){
+// Greyscale of 8 and color of 24 or 32 bits per pixel may be given.
+// Palette color images will not work properly and must be converted to
+// 24 bit.
+// Binary images of 1 bit per pixel may also be given but they must be
+// byte packed with the MSB of the first byte being the first pixel, and a
+// one pixel is WHITE. For binary images set bytes_per_pixel=0.
+int loadBWTiff(const char * file){
 
 TIFF *tif=TIFFOpen(file, "r");
 //Then you must get the size of the image from the opened file:
@@ -19,15 +27,26 @@ raster=(uint32 *) _TIFFmalloc(npixels *sizeof(uint32));
 
 //Now you are able to read the image from the TIFF file using the following function:
 TIFFReadRGBAImage(tif, width, height, raster, 0);
-//Note: You should always check the return value of the function to make sure that there is no error occurred in the reading process.  Returning 1 means read was successful, and if 0 is returned, some type of error occured.
 
-//To get each of the individual channel of a pixel use the function:
-int i=3;
-char r=(char )TIFFGetR(raster[i]);  // where X can be the channels R, G, B, and A.
-// i is the index of the pixel in the raster.
+char  img[npixels/8];
+for(uint i=0;i<npixels;i+=8){
+	char a=(char)((TIFFGetR(raster[++i])+1)<<7);
+	a+=(char)((TIFFGetR(raster[++i])+1)<<6);
+	a+=(char)((TIFFGetR(raster[++i])+1)<<5);
+	a+=(char)((TIFFGetR(raster[++i])+1)<<4);
+	
+	a+=(char)((TIFFGetR(raster[++i])+1)<<3);
+	a+=(char)((TIFFGetR(raster[++i])+1)<<2);
+	a+=(char)((TIFFGetR(raster[++i])+1)<<1);
+	a+=(char)((TIFFGetR(raster[++i])+1)<<0);
+	img[((int)i/8)-1]=a;//byte packed MSV char array for BW image
+}
 _TIFFfree(raster);
 TIFFClose(tif);
 
+return 0;
 
 }
+
+#endif
 
