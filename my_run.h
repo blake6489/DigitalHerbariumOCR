@@ -18,8 +18,6 @@ using namespace std;
 #include "tools/utils.h"
 #include "tools/UnsharpConfigs.h"
 
-
-
 //fit:3.72802 diff:196 max:364 min:97--76x5.8245+3+0.36276
 //fit:3.80874 diff:169 max:366 min:99--31x3.3691+4+0.22789
 //fit:3.85205 diff:152 max:365 min:98--53x3.3691+4+0.15165
