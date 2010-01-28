@@ -12,7 +12,6 @@ using namespace std;
 #include "tools/distance.h"
 #include "tools/loadTiff.cpp"
 #include "tools/UnsharpConfigs.h"
-
 #include "search.h"
 
 /*char* run_tesseract(const char* language,
