@@ -1,15 +1,23 @@
-CPP   = gcc -c -I../engine
-CPPFLAGS+= `Magick++-config --cppflags --cxxflags --ldflags --libs` -Wall -O2 -Iinclude -ltiffxx 
+CC = '/opt/intel/Compiler/11.1/064/bin/ia32/icc'
+#CC = g++
+CPPFLAGS+= -w1 -O2 
+CPPFLAGS+= `Magick++-config --cppflags --cxxflags --ldflags --libs`
+CPPFLAGS+= -ltiffxx
+OUT = -o main
+COMPILE = $(CC) $(CPPFLAGS) $(OUT)
 
 all: main
 
 clean:
 	rm main
-	
+		
 cleantest:
 	rm test
 
-main: tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp search.h my_fitness.h main.cpp
+main: 
+	$(COMPILE)  main.cpp
+	
+	#$(COMPILE) tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp search.h my_fitness.h main.cpp
 
 test: tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp my_fitness.h test.cpp
 

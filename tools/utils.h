@@ -1,5 +1,7 @@
 //used in the unsharp modifications of the images
 
+#include <fstream>
+
 #ifndef UTILS_H_INCLUDE
 #define UTILS_H_INCLUDE
 

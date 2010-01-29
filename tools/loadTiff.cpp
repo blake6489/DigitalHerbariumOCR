@@ -1,3 +1,5 @@
+
+
 #include <tiffio.h>
 #include <iostream>
 
@@ -29,7 +31,7 @@ raster=(uint32 *) _TIFFmalloc(npixels *sizeof(uint32));
 TIFFReadRGBAImage(tif, width, height, raster, 0);
 
 char  img[npixels/8];
-for(uint i=0;i<npixels;i+=8){
+for(unsigned int i=0;i<npixels;i+=8){
 	char a=(char)((TIFFGetR(raster[++i])+1)<<7);
 	a+=(char)((TIFFGetR(raster[++i])+1)<<6);
 	a+=(char)((TIFFGetR(raster[++i])+1)<<5);

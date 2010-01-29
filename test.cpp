@@ -20,7 +20,7 @@ int main()
 
 		Image image;
 
-		image.read("/home/blake/Desktop/OCR/img/H1023457.cr2" );
+		image.read("/home/blake/Desktop/OCR/input/H1023457.cr2" );
 
 		image.threshold ( 36252 );
 		//radius_,sigma_,amount_,threshold_ );
