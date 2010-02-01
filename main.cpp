@@ -2,23 +2,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
 //#include <fstream>
-
 //#include <cstring>
 //#include <cstdlib>
-
-#include <Magick++.h>
-using namespace Magick;
-//#include <tiffio.h>
-
 using namespace std;
+
+//#include <tiffio.h>
 
 #include "tools/distance.h"
 #include "tools/loadTiff.cpp"
 #include "tools/UnsharpConfigs.h"
 #include "tools/utils.h"
-//#include "search.h"
+#include "convert.h"
 
 /*char* run_tesseract(const char* language,
                     const unsigned char* imagedata,
@@ -35,29 +30,9 @@ using namespace std;
 
 int main(){
 	
-	try {
-
-		Image image;
-
-		image.read("/home/blake/Desktop/OCR/input/H1023457.cr2" );
-
-		image.threshold ( 36252 );
-		//radius_,sigma_,amount_,threshold_ );
-		image.unsharpmask(5,3.3,4,5);
-		image.monochrome();
-		image.depth (1);
-
-		//should write to non-file type and passed to Tess API
-		image.write("testthing.tif");
-
-		// Display the result
-		image.display( );
-	}
-	catch( exception &error_ )
-	{
-		cout << "Caught exception: IM image read - " << error_.what() << endl;
-		return 1;
-	}
+	//UnsharpConfigs tsa=UnsharpConfigs(1.0,1.0,1.0,1.0,1.0);
+	
+	
 
 //void SetImage(const unsigned char* imagedata, int width, int height, int bytes_per_pixel, int bytes_per_line);
                 
@@ -73,9 +48,6 @@ int main(){
 //  int* AllWordConfidences();
   
   
-return 0;	
-	//srand(time(NULL));
-
 
 //box off text
 //unsharp text
