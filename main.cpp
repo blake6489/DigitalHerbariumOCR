@@ -7,13 +7,11 @@
 //#include <cstdlib>
 using namespace std;
 
-//#include <tiffio.h>
-
 #include "tools/distance.h"
-#include "tools/loadTiff.cpp"
+//#include "tools/loadTiff.cpp"
 #include "tools/UnsharpConfigs.h"
 #include "tools/utils.h"
-#include "convert.h"
+//#include "convert.h"
 
 /*char* run_tesseract(const char* language,
                     const unsigned char* imagedata,
@@ -30,10 +28,9 @@ using namespace std;
 
 int main(){
 	
-	//UnsharpConfigs tsa=UnsharpConfigs(1.0,1.0,1.0,1.0,1.0);
+	UnsharpConfigs us;
 	
-	
-
+	//int i=convert("/home/blake/Desktop/OCR/input/H1008013.dng");
 //void SetImage(const unsigned char* imagedata, int width, int height, int bytes_per_pixel, int bytes_per_line);
                 
 //prefered, but requires Leptonica              

@@ -14,7 +14,7 @@ cleantest:
 	rm test
 
 main: 
-	$(COMPILE) main.cpp
+	$(COMPILE) main.cpp 
 	
 	#$(COMPILE) tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp search.h my_fitness.h main.cpp
 
