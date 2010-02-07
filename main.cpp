@@ -7,13 +7,15 @@
 //#include <cstdlib>
 using namespace std;
 
+#include "ccmain/baseapi.h"
+
 #include "tools/distance.h"
 //#include "tools/loadTiff.cpp"
 #include "tools/UnsharpConfigs.h"
 #include "tools/utils.h"
 //#include "convert.h"
 
-/*char* run_tesseract(const char* language,
+char* run_tesseract(const char* language,
                     const unsigned char* imagedata,
                     int bytes_per_pixel, int bytes_per_line,
                     int width, int height) {
@@ -24,7 +26,7 @@ using namespace std;
   TessBaseAPI::End();
 
   return text;
-}*/
+}
 
 int main(){
 	
