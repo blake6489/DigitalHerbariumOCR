@@ -10,11 +10,12 @@ all: main
 clean:
 	rm main
 		
-cleantest:
-	rm test
+new:
+	rm main
+	make main
 
 main: 
-	$(COMPILE)  tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp 
+	$(COMPILE)  convert.cpp tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp 
 	
 	#$(COMPILE) tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp search.h my_fitness.h main.cpp
 

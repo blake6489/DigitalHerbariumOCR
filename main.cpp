@@ -4,18 +4,19 @@
 #include <vector>
 //#include <fstream>
 //#include <cstring>
-//#include <cstdlib>
+#include <cstdlib>
+#include <stdlib.h>
 using namespace std;
 
-#include "ccmain/baseapi.h"
+//#include "ccmain/baseapi.h"
 
 #include "tools/distance.h"
 //#include "tools/loadTiff.cpp"
 #include "tools/UnsharpConfigs.h"
 #include "tools/utils.h"
-//#include "convert.h"
+#include "convert.h"
 
-char* run_tesseract(const char* language,
+/*char* run_tesseract(const char* language,
                     const unsigned char* imagedata,
                     int bytes_per_pixel, int bytes_per_line,
                     int width, int height) {
@@ -27,12 +28,43 @@ char* run_tesseract(const char* language,
 
   return text;
 }
-
+*/
 int main(){
 	
-	UnsharpConfigs us;
+	string ImgDirI="~/Desktop/OCR/input/";
+	string ImgDirO="~/Desktop/OCR/input/";
+	string TxtDirO="~/Desktop/OCR/output/";
+	string ImgTyp=".cr2";
+	string Otype=".tif";
 	
-	//int i=convert("/home/blake/Desktop/OCR/input/H1008013.dng");
+	string fileList=fileRead("~/Desktop/OCR/files.txt");
+	
+	int length=fileList.length();
+	int pos=0;
+	int pos2=1;
+	vector<string> fileArr;
+	int nnn=0;
+	while(5000>pos && nnn<1000000){
+		pos2=fileList.find(",",pos);
+		string file=fileList.substr(pos,pos2-pos);
+		fileArr.push_back(file);
+		//cout<<file<<" p:"<<pos<<" p2:"<<pos2<<endl;
+		pos=pos2+1;
+		++nnn;
+	}
+	
+	
+	for(int i=0;i<100;++i){
+		string img=fileArr[i];
+		//cout<<ImgDirO+img.substr(0,img.length()-4)+".jpg"<<endl;
+		string outI=(ImgDirO+img.substr(0,img.length()-4)+Otype);
+		int ee=convert(ImgDirI+img,outI);
+		//system call of tesseract to perform OCR on image
+		//tesseract must be installed for this to work
+		string arg="tesseract " + outI + " " + outI;
+		//cout<< arg<<endl;
+		system(arg.c_str());
+	}
 //void SetImage(const unsigned char* imagedata, int width, int height, int bytes_per_pixel, int bytes_per_line);
                 
 //prefered, but requires Leptonica              
@@ -46,31 +78,9 @@ int main(){
   // delimited words in GetUTF8Text.
 //  int* AllWordConfidences();
   
-  
-
-//box off text
-//unsharp text
-//tess api get words and scores
-//use scores?
-//post prosess 
-
-//dosnt return correctly yet
-//int length=loadBWTiff("/home/blake/Desktop/OCR/input/H1023465.tiff");
-
-// not in api.h
+  // not in api.h
 //AllTextConfidences(PAGE_RES* page_res)
 //IsValidWord(egf)
-
-	//vector<string> f;
-	//f.push_back("H1023457.tiff");
-	//f.push_back("H1023465.tiff");
-	//center
-	//UnsharpConfigs c(53,2.5,4,0.4,45000);
-	// bound is the amount that will be added to and subtracted from center
-	//vec5 b(50,2.5,50,0.4,44000);
-	//b=b*0.9;
-	//c=search(c,b,f);
-	//cout<<my_fitness(c,f);
 
 	return 0;
 

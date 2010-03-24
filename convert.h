@@ -5,7 +5,7 @@
 
 #include <string>
 
-int convert(string file);
+int convert(string ifile,string ofile);
 
 #endif
 
