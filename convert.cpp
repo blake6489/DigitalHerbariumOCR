@@ -24,11 +24,13 @@ int convert(string ifile,string ofile){
 
 		image.read(ifile);
 
-		image.threshold ( 36252 );
 		//radius_,sigma_,amount_,threshold_
-		image.unsharpmask(53,3.3691,4,0.15165);
-		image.monochrome();
-		//image.depth (1);
+		image.unsharpmask(4,1.1,4,0.05);
+
+		image.threshold ( 32000 );
+		
+		//image.monochrome();
+		image.depth (1);
 
 		//should write to non-file type and passed to Tess API
 		image.write(ofile);

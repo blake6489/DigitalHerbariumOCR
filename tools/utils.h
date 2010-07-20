@@ -1,4 +1,5 @@
 //used in the unsharp modifications of the images
+//file opening and handleing
 
 #include <fstream>
 
@@ -52,5 +53,26 @@ string fileRead(string file)
 	
 	return out;
 }
+
+vector<string> stringToVector(string s, string searchString){
+	int length=s.length();
+	int pos=0;
+	int pos2=1;
+	vector<string> vec;
+	int linecount=0;
+	int linelimit=10000;
+	int stringlimit=linelimit*300;
+	//string searchString =".txt";
+	while(length>pos && linecount<linelimit){
+		pos2=s.find(searchString,pos)+searchString.length();
+		string line=s.substr(pos,pos2-pos);
+		vec.push_back(line);
+		//cout<<line<<" p:"<<pos<<" p2:"<<pos2<<endl;
+		pos=pos2;
+		++linecount;
+	}
+	return vec;
+}
+
 #endif
 

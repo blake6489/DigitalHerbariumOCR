@@ -1,59 +1,40 @@
-
+// test.cpp
+// Used to compair the tesseract text output with the known text of a few files for testing and verification using and edit distance algorithm
+//compile with make test
+//
 #include <iostream>
-#include <vector>
 #include <string>
-#include <fstream>
-#include <cstring>
+#include <vector>
+//#include <fstream>
+//#include <cstring>
 #include <cstdlib>
-
-#include <Magick++.h>
-
+#include <stdlib.h>
 using namespace std;
-using namespace Magick;
 
+//#include "ccmain/baseapi.h"
+
+#include "tools/distance.h"
+#include "my_fitness.h"
 #include "tools/UnsharpConfigs.h"
+#include "tools/utils.h"
+#include "convert.h"
 
-
-int main()
-{
-	try {
-
-		Image image;
-
-		image.read("/home/blake/Desktop/OCR/input/H1023457.cr2" );
-
-		image.threshold ( 36252 );
-		//radius_,sigma_,amount_,threshold_ );
-		image.unsharpmask(5,3.3,4,5);
-		image.monochrome();
-		image.depth (1);
-
-		//should write to non-file type and passed to Tess API
-		image.write("testthing.tif");
-
-		// Display the result
-		image.display( );
+int main(){
+	
+	//find PATH > files.txt
+	string kFileList=fileRead("/home/blake/Desktop/OCR/knownFiles.txt");
+	string uFileList=fileRead("/home/blake/Desktop/OCR/unknownFiles.txt");
+	
+	vector<string> kFileArr=stringToVector(kFileList,".txt");
+	vector<string> uFileArr=stringToVector(uFileList,".txt");
+		
+	float avg=0;
+	for(int i=0;i<kFileArr.size();++i){		
+		avg+=(my_fitness(fileRead(uFileArr[i]),fileRead(kFileArr[i])))/kFileArr.size();
 	}
-	catch( exception &error_ )
-	{
-		cout << "Caught exception: IM image read - " << error_.what() << endl;
-		return 1;
-	}
+	cout<<avg<<endl;
 
-void SetImage(const unsigned char* imagedata, int width, int height,
-                int bytes_per_pixel, int bytes_per_line);
-                
-//prefered, but requires Leptonica              
-//void TessBaseAPI::SetImage(const Pix* pix) {
 
- int Recognize(ETEXT_STRUCT* monitor);
- 
-   // Returns all word confidences (between 0 and 100) in an array, terminated
-  // by -1.  The calling function must delete [] after use.
-  // The number of confidences should correspond to the number of space-
-  // delimited words in GetUTF8Text.
-  int* AllWordConfidences();
-  
-  
-return 0;
+	return 0;
+
 }
