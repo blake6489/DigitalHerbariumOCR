@@ -3,7 +3,9 @@
 #ifndef CONVERT_H
 #define CONVERT_H
 
-int convert(const char * file);
+#include <string>
+
+int convert(string ifile,string ofile);
 
 #endif
 

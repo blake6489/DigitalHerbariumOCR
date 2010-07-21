@@ -2,28 +2,38 @@
 //Blake Eggemeyer
 //1-2-2010
 
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <cstdlib>
+using std::exception;
+#include <string>
+using std::string;
 
 #include <Magick++.h>
 using namespace Magick;
 
+
 #include "convert.h"
 
-int convert(const char * file){
+int convert(string ifile,string ofile){
 
 	try {
 
 		Image image;
 
-		image.read(file);
+		image.read(ifile);
 
-		image.threshold ( 36252 );
 		//radius_,sigma_,amount_,threshold_
-		image.unsharpmask(5,3.3,4,5);
-		image.monochrome();
+		image.unsharpmask(4,1.1,4,0.05);
+
+		image.threshold ( 32000 );
+		
+		//image.monochrome();
 		image.depth (1);
 
 		//should write to non-file type and passed to Tess API
-		image.write("testthing.tif");
+		image.write(ofile);
 
 		// Display the result
 		//image.display( );
