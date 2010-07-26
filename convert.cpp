@@ -19,20 +19,27 @@ using namespace Magick;
 int convert(string ifile,string ofile){
 
 	try {
-
 		Image image;
-
 		image.read(ifile);
-
+		//cout<<"max"<<image.MaxRGB<<endl;
+		
+		//image.depth(16);
+		
+		//black,white,mid out of 65536
+		image.level(13107,52428);
+		
 		//radius_,sigma_,amount_,threshold_
 		image.unsharpmask(4,1.1,4,0.05);
-
-		image.threshold ( 32000 );
+		
+		//black,white,mid out of 65536
+		image.level(11141,54394);
+		
+		image.threshold(25000);
 		
 		//image.monochrome();
-		image.depth (1);
+		image.depth(1);
 
-		//should write to non-file type and passed to Tess API
+		//should write to non-file type and passed to Tess API, but thois will do for now
 		image.write(ofile);
 
 		// Display the result

@@ -4,27 +4,27 @@
 #CC = '/opt/intel/Compiler/11.1/064/bin/ia32/icc'
 CC = g++
 CPPFLAGS+= -w -O2 
-CPPFLAGS+= -I '/home/blake/Desktop/OCR/tesseract-2.04/'
+#CPPFLAGS+= -I '/home/blake/Desktop/OCR/tesseract-2.04/'
 CPPFLAGS+= `Magick++-config --cppflags --cxxflags --ldflags --libs`
 CPPFLAGS+= -ltiffxx
 
-OUT = -o main
-COMPILE = $(CC) $(CPPFLAGS) $(OUT)
+COMPILE = $(CC) $(CPPFLAGS) 
 
-all: main
+all: main test
 
-clean:
-	rm main
-		
-cleantest:
+cleanall:
+	rm main 
 	rm test
+		
+cleanmain:
+	rm main
 	
 new:
 	rm main
 	make main
 
 main: 
-	$(COMPILE) convert.cpp tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp 
+	$(COMPILE) -o main convert.cpp tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp 
 	
 	#$(COMPILE) tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp search.h my_fitness.h main.cpp
 

@@ -88,6 +88,7 @@ int main(){
 	fileArr.push_back("H1026031.cr2");
 	fileArr.push_back("H1026032.cr2");
 	fileArr.push_back("H1026033.cr2");
+	/*
 	fileArr.push_back("H1026034.cr2");
 	fileArr.push_back("H1026035.cr2");
 	fileArr.push_back("H1026036.cr2");
@@ -131,12 +132,9 @@ int main(){
 	fileArr.push_back("H1026075.cr2");
 	fileArr.push_back("H1026076.cr2");
 	fileArr.push_back("H1026077.cr2");
+	*/
 	
-	/*fileArr.push_back("H1007818.cr2");
-	fileArr.push_back("H1007819.cr2");
-	fileArr.push_back("H1026046.cr2");
-	fileArr.push_back("H1161054.cr2");
-	fileArr.push_back("H1096149.dng");
+	/*fileArr.push_back("H1096149.dng");
 	fileArr.push_back("H1210328.dng");
 	fileArr.push_back("H1096149.dng");
 	fileArr.push_back("H1122553.dng");
@@ -149,8 +147,8 @@ int main(){
 	fileArr.push_back("H1158090.dng");
 	fileArr.push_back("H1178718.dng");
 	fileArr.push_back("H1179612.dng");
-	fileArr.push_back("H1210328.dng");*/
-
+	fileArr.push_back("H1210328.dng");
+*/
 	
 	for(int i=0;i<fileArr.size();++i){
 		string img=fileArr[i];

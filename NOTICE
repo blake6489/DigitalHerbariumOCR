@@ -1,7 +1,10 @@
 NOTICE
 
-EditDistance algorithm in tools/distance.cpp written by Opera Wang 
-
-
+EditDistance algorithm in tools/distance.cpp and tools/distance.h
+	writer : Opera Wang
+    E-Mail : wangvisual AT sohu DOT com
+    License: GPL
+    
+Fonts to be credited 
 
 
