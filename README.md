@@ -14,6 +14,7 @@ libtiff must be installed before compiling Imagemagick for the different file ty
 This code currently produces the binaries `main`, and `test` with 
 	$ make all  
 `main` converts the images and runs them through Tesseract, producing the OCRed output
+
 `test` uses an edit distance algorithm to compare the output of main with known text of the same files
 
 

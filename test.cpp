@@ -19,18 +19,26 @@ using namespace std;
 #include "tools/utils.h"
 #include "convert.h"
 
-int main(){
-	
+
+//takes text file listing files of known text, and another listing text to be compared 
+int main(int argc, char **argv){
+
+	string kFile=argv[1];
+	string uFile=argv[2];
 	//find PATH > files.txt
-	string kFileList=fileRead("/home/blake/Desktop/OCR/knownFiles.txt");
-	string uFileList=fileRead("/home/blake/Desktop/OCR/unknownFiles.txt");
+	//string kFileList=fileRead("/home/blake/Desktop/OCR/knownFiles.txt");
+	string kFileList=fileRead(kFile);
+	//string uFileList=fileRead("/home/blake/Desktop/OCR/unknownFiles.txt");
+	string uFileList=fileRead(uFile);
 	
 	vector<string> kFileArr=stringToVector(kFileList,".txt");
 	vector<string> uFileArr=stringToVector(uFileList,".txt");
 		
 	float avg=0;
+	//cout<<kFileArr.size()<<endl;
 	for(int i=0;i<kFileArr.size();++i){		
 		avg+=(my_fitness(fileRead(uFileArr[i]),fileRead(kFileArr[i])))/kFileArr.size();
+		//cout<<"===\n"<<i<<endl;
 	}
 	cout<<avg<<endl;
 

@@ -36,7 +36,8 @@ float my_fitness(string unknownTxt, string knownTxt)
 	float maxDiff=max(knownTxt.length(),unknownTxt.length());
 	//fit-=(diff-minDiff)/maxDiff;
 	fit-=(diff)/maxDiff;
-	cout<<fit<<", "<<diff<<", "<<maxDiff<<", "<<minDiff<<endl;
+	
+	//cout<<fit<<", "<<diff<<", "<<maxDiff<<", "<<minDiff<<endl;
 
 	return fit;
 	
