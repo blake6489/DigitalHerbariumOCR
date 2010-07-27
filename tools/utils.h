@@ -2,10 +2,11 @@
 //file opening and handleing
 
 #include <fstream>
+#include <utility>		// pair
 
-#include <sys/mman.h>  // for mmap, munmap
-#include <sys/stat.h>		//getting filesize
-#include <fcntl.h>     // for open, close, write
+#include <sys/mman.h>	// for mmap, munmap
+#include <sys/stat.h>	//getting filesize
+#include <fcntl.h>		// for open, close, write
 
 #ifndef UTILS_H_INCLUDE
 #define UTILS_H_INCLUDE
@@ -105,37 +106,49 @@ vector<string> stringToVector(string s, string searchString){
 	int pos=0;
 	int pos2=1;
 	vector<string> vec;
-	int linecount=0;
-	int linelimit=10000;
-	int stringlimit=linelimit*300;
+	int entrycount=0;
+	int entrylimit=10000;
+	int stringlimit=entrylimit*300;
 	//string searchString =".txt";
-	while(length>pos && linecount<linelimit){
+	while(length>pos && entrycount<entrylimit){
 		pos2=s.find(searchString,pos)+searchString.length();
-		string line=s.substr(pos,pos2-pos);
-		vec.push_back(line);
-		//cout<<line<<" p:"<<pos<<" p2:"<<pos2<<" line:"<<linecount<<endl;
+		string entry=s.substr(pos,pos2-pos);
+		vec.push_back(entry);
+		//cout<<entry<<" p:"<<pos<<" p2:"<<pos2<<" line:"<<linecount<<endl;
 		pos=pos2;
-		++linecount;
+		++entrycount;
 	}
 	return vec;
 }
 
-vector<string> stringToVectorPair(string s, string searchString){
+//delimiterA separates elements of a pair
+//delimiterB separates pairs
+//unlike nonpair version, the delimiters are removed after found
+vector<pair<string,string> > stringToVectorPair(string s, string delimiterA, string delimiterB){
 	int length=s.length();
+	cout<<length<<endl;
 	int pos=0;
 	int pos2=1;
-	vector<string> vec;
-	int linecount=0;
-	int linelimit=10000;
-	int stringlimit=linelimit*300;
-	//string searchString =".txt";
-	while(length>pos && linecount<linelimit){
-		pos2=s.find(searchString,pos)+searchString.length();
-		string line=s.substr(pos,pos2-pos);
-		vec.push_back(line);
-		//cout<<line<<" p:"<<pos<<" p2:"<<pos2<<" line:"<<linecount<<endl;
-		pos=pos2;
-		++linecount;
+	int pos3=2;
+	vector<pair<string,string> > vec;
+	pair<string,string> entry;
+	int entrycount=0;
+	int entrylimit=10000;
+	int stringlimit=entrylimit*300;
+	while(length>pos && entrycount<entrylimit){
+		pos2=s.find(delimiterA,pos);		//end of first part
+		if(pos2==-1){break;}				//end of entries
+		entry.first=s.substr(pos,pos2-pos);
+		
+		pos2=pos2+delimiterA.length();		//begining of next part
+		pos3=s.find(delimiterB,pos2);
+		entry.second=s.substr(pos2,pos3-pos2);
+		
+		vec.push_back(entry);
+		
+		//cout<<entry.first<<"~"<<entry.second<<" p:"<<pos<<" p2:"<<pos2<<" p3:"<<pos3<<" line:"<<entrycount<<endl;
+		pos=pos3;
+		++entrycount;
 	}
 	return vec;
 }

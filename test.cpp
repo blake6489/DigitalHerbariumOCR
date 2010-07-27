@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <utility>		// pair
 //#include <fstream>
 //#include <cstring>
 #include <cstdlib>
@@ -23,25 +24,22 @@ using namespace std;
 //takes text file listing files of known text, and another listing text to be compared 
 int main(int argc, char **argv){
 
-	string kFile=argv[1];
-	string uFile=argv[2];
-	//find PATH > files.txt
-	//string kFileList=fileRead("/home/blake/Desktop/OCR/knownFiles.txt");
-	string kFileList=fileRead(kFile);
-	//string uFileList=fileRead("/home/blake/Desktop/OCR/unknownFiles.txt");
-	string uFileList=fileRead(uFile);
+	string file=argv[1];
 	
-	vector<string> kFileArr=stringToVector(kFileList,".txt");
-	vector<string> uFileArr=stringToVector(uFileList,".txt");
+	string fileList=fileReadMmap(file);
+
+	vector< pair <string, string> > fileArr=stringToVectorPair(fileList,",","\n");
+	//need to actually check that output is any good and not empty
+	cout<<fileArr[0].first<<", "<<fileArr[0].second<<endl;
 		
-	float avg=0;
-	//cout<<kFileArr.size()<<endl;
+	/*float avg=0;
+	
 	for(int i=0;i<kFileArr.size();++i){		
 		avg+=(my_fitness(fileRead(uFileArr[i]),fileRead(kFileArr[i])))/kFileArr.size();
 		//cout<<"===\n"<<i<<endl;
 	}
 	cout<<avg<<endl;
-
+*/
 
 	return 0;
 
