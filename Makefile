@@ -5,7 +5,7 @@
 CC = g++
 CPPFLAGS+= -w -O2 
 #CPPFLAGS+= -I '/home/blake/Desktop/OCR/tesseract-2.04/'
-CPPFLAGS+= `Magick++-config --cppflags --cxxflags --ldflags --libs`
+#CPPFLAGS+= `Magick++-config --cppflags --cxxflags --ldflags --libs`
 CPPFLAGS+= -ltiffxx
 
 COMPILE = $(CC) $(CPPFLAGS) 
@@ -24,7 +24,7 @@ new:
 	make main
 
 main: 
-	$(COMPILE) -o main convert.cpp tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp 
+	$(COMPILE) -o main  tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp 
 	
 	#$(COMPILE) tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp search.h my_fitness.h main.cpp
 

@@ -30,16 +30,16 @@ int main(int argc, char **argv){
 
 	vector< pair <string, string> > fileArr=stringToVectorPair(fileList,",","\n");
 	//need to actually check that output is any good and not empty
-	cout<<fileArr[0].first<<", "<<fileArr[0].second<<endl;
+	//cout<<fileArr[0].first<<", "<<fileArr[0].second<<endl;
 		
-	/*float avg=0;
+	float avg=0;
 	
-	for(int i=0;i<kFileArr.size();++i){		
-		avg+=(my_fitness(fileRead(uFileArr[i]),fileRead(kFileArr[i])))/kFileArr.size();
+	for(int i=0;i<fileArr.size();++i){		
+		avg+=(my_fitness(fileReadMmap(fileArr[i].first),fileReadMmap(fileArr[i].second)))/fileArr.size();
 		//cout<<"===\n"<<i<<endl;
 	}
 	cout<<avg<<endl;
-*/
+
 
 	return 0;
 
