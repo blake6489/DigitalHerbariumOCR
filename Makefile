@@ -3,32 +3,20 @@
 
 #CC = '/opt/intel/Compiler/11.1/064/bin/ia32/icc'
 CC = g++
+MLIBS = `Magick++-config --cppflags --cxxflags --ldflags --libs`
+TIFFLIBS=-ltiffxx
 CPPFLAGS+= -w -O2 
+NORANGER=0
+YESRANGER=1
+PREPROS=-D RANGER=
+OUTFILE=-o main
+INFILE=convert.cpp tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp
 #CPPFLAGS+= -I '/home/blake/Desktop/OCR/tesseract-2.04/'
-#CPPFLAGS+= `Magick++-config --cppflags --cxxflags --ldflags --libs`
-CPPFLAGS+= -ltiffxx
 
-COMPILE = $(CC) $(CPPFLAGS) 
 
-all: main test
+home:  
+	$(CC) $(CPPFLAGS) $(PREPROS)$(NORANGER) $(MLIBS) $(TIFFLIBS) $(OUTFILE) $(INFILE)
 
-cleanall:
-	rm main 
-	rm test
-		
-cleanmain:
-	rm main
-	
-new:
-	rm main
-	make main
+ranger: 
+	$(CC) $(CPPFLAGS) $(PREPROS)$(YESRANGER) $(MLIBS) $(TIFFLIBS) $(OUTFILE) $(INFILE)
 
-main: 
-	$(COMPILE) -o main  tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp 
-	
-	#$(COMPILE) tools/distance.h tools/distance.cpp tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp search.h my_fitness.h main.cpp
-
-test: 
-	$(COMPILE) -o test tools/distance.h tools/distance.cpp my_fitness.h test.cpp
-
-run: tools/UnsharpConfigs.h tools/UnsharpConfigs.cpp my_run.h run.cpp

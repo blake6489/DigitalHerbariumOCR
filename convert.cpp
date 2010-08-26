@@ -10,9 +10,9 @@ using std::exception;
 #include <string>
 using std::string;
 
+#if RANGER==0
 #include <Magick++.h>
 using namespace Magick;
-
 
 #include "convert.h"
 
@@ -55,4 +55,5 @@ int convert(string ifile,string ofile){
 
 }
 
+#endif
 
