@@ -18,5 +18,8 @@ home:
 	$(CC) $(CPPFLAGS) $(PREPROS)$(NORANGER) $(MLIBS) $(TIFFLIBS) $(OUTFILE) $(INFILE)
 
 ranger: 
-	$(CC) $(CPPFLAGS) $(PREPROS)$(YESRANGER) $(MLIBS) $(TIFFLIBS) $(OUTFILE) $(INFILE)
+	#linked to in README
+	export DHOCR=$HOME
+	export TESSDATA_PREFIX=$(HOME)/tess/tessdata
+	$(CC) $(CPPFLAGS) $(PREPROS)$(YESRANGER) $(OUTFILE) $(INFILE)
 

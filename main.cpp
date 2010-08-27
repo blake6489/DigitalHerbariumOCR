@@ -90,7 +90,7 @@ int main(int argc, char **argv){
 			system(arg1.c_str());
 			//system call of tesseract to perform OCR on image
 			//tesseract must be installed for this to work
-			string arg2="$DHOCR/tesseract-2.04/exe/bin/tesseract " + outI + " " + outT;
+			string arg2="$DHOCR/tess/bin/tesseract " + outI + " " + outT;
 			cout<<arg2<<endl;
 			system(arg2.c_str());
 		#endif

@@ -2,20 +2,19 @@ README
 Blake Eggemeyer 
 i.linwin@gmail.com
 
-Updated 2010-07-26 
+Updated 2010-08-27 
 
 This is the jury rigged version.
 
-Tesseract 2.04 must be installed as it will be called via a system call.
-You must alter the source code to fit the directory structure I have, it is not good, but its is very basic.
+This project is not meant to be portable. It is meant to run on the TACC Ranger computer (and my home computer for testing).  Good luck compiling it yourself.  
 
-libtiff must be installed before compiling Imagemagick for the different file types to work
+Tesseract 2.04 should be downloaded and compiled from source. Line 22 of the Makefile should be changed to reflect the location of the binarys, along with the TESSDATA_PREFIX.
 
-This code currently produces the binaries `main`, and `test` with 
-	$ make all  
+Imagemagick needs to be compiled and installed from source, and the paths in the Makefile changed.  libtiff must be installed before compiling Imagemagick for the different file types to work.
+
+This code currently produces the binary `main` for either Ranger, or MY home enviroment based on the target given to the make file, I suggest compiling for Ranger if you ar not me.
+	$ make home  
 `main` converts the images and runs them through Tesseract, producing the OCRed output
-
-`test` uses an edit distance algorithm to compare the output of main with known text of the same files
 
 
 
