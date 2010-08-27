@@ -14,7 +14,7 @@ Imagemagick needs to be compiled and installed from source, and the paths in the
 
 This code currently produces the binary `main` for either Ranger, or MY home enviroment based on the target given to the make file, I suggest compiling for Ranger if you ar not me.
 	$ make home  
-`main` converts the images and runs them through Tesseract, producing the OCRed output
+`main` converts the images in their original directory (you must have write permissions) and runs them through Tesseract, producing the OCRed output in the specified directory
 
 
 

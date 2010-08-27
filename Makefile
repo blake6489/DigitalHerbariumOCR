@@ -1,17 +1,18 @@
-#export LD_LIBRARY_PATH=/home/blake/Desktop/OCR/xerces-c-3.1.1-x86-linux-gcc-3.4/lib:$LD_LIBRARY_PATH 
-#export PATH="$PATH:/home/blake/Desktop/OCR/xerces-c-3.1.1-x86-linux-gcc-3.4/bin"
 
 #CC = '/opt/intel/Compiler/11.1/064/bin/ia32/icc'
 CC = g++
+CPPFLAGS+= -w -O2
 MLIBS = `Magick++-config --cppflags --cxxflags --ldflags --libs`
 TIFFLIBS=-ltiffxx
-CPPFLAGS+= -w -O2 
+#Rangerness
 NORANGER=0
 YESRANGER=1
+
 PREPROS=-D RANGER=
+
 OUTFILE=-o main
 INFILE=convert.cpp tools/distance.cpp tools/UnsharpConfigs.cpp main.cpp
-#CPPFLAGS+= -I '/home/blake/Desktop/OCR/tesseract-2.04/'
+
 
 
 home:  
@@ -20,6 +21,10 @@ home:
 ranger: 
 	#linked to in README
 	export DHOCR=$HOME
-	export TESSDATA_PREFIX=$(HOME)/tess/tessdata
+	#Path to tesseract binaries (on Ranger)
+	export TESSPATH=$(HOME)/tesseract-2.04/bin
+	#Path to ImageMagick binaries (on Ranger)
+	export MPATH=$(HOME)/ImageMagick-6.6.2-10/utilities
+	export TESSDATA_PREFIX=$(HOME)/tesseract-2.04/tessdata
 	$(CC) $(CPPFLAGS) $(PREPROS)$(YESRANGER) $(OUTFILE) $(INFILE)
 
