@@ -29,6 +29,13 @@ int main(int argc, char **argv){
 	//tell me some things about this version
 	cout<<"DHOCR compiled on "<<__TIME__<<" "<<__DATE__<<" Rangerness="<<RANGER<<endl;
 
+//setup systen envoroment variables...
+//TODO this is hackish... wtf
+#if RANGER==1
+system("export TESSPATH=$HOME/tesseract-2.04/bin");
+system("export MPATH=$HOME/ImageMagick-6.6.2-10/utilities");
+system("export TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
+#endif
 	vector<string> inFiles;
 	
 	int ii=1;
@@ -85,12 +92,12 @@ int main(int argc, char **argv){
 			cout<<arg2<<endl;
 			system(arg2.c_str());
 		#else
-			string arg1="$DHOCR/ImageMagick-6.6.2-10/utilities/convert " + img + " -threshold 25000 -depth 1 " + outI;
+			string arg1="$IMPATH/convert " + img + " -threshold 25000 -depth 1 " + outI;
 			cout<<arg1<<endl;
 			system(arg1.c_str());
 			//system call of tesseract to perform OCR on image
 			//tesseract must be installed for this to work
-			string arg2="$DHOCR/tess/bin/tesseract " + outI + " " + outT;
+			string arg2="TESSPATH/tesseract " + outI + " " + outT;
 			cout<<arg2<<endl;
 			system(arg2.c_str());
 		#endif
