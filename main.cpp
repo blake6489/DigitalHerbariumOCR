@@ -32,9 +32,9 @@ int main(int argc, char **argv){
 //setup systen envoroment variables...
 //TODO this is hackish... wtf
 #if RANGER==1
-system("export TESSPATH=$HOME/tesseract-2.04/bin");
-system("export MPATH=$HOME/ImageMagick-6.6.2-10/utilities");
-system("export TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
+string TessPath="$HOME/tesseract-2.04/bin";
+string ImPath="$HOME/ImageMagick-6.6.2-10/utilities";
+//system("TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
 #endif
 	vector<string> inFiles;
 	
@@ -46,15 +46,15 @@ system("export TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
 		string fileName=str.substr(lSlash+1,str.length()-lSlash-1);
 		string fileExt=str.substr(lDot,str.length()-lDot);
 		
-		cout<<fileName<<endl;
-		cout<<fileExt<<endl;
+		//cout<<fileName<<endl;
+		//cout<<fileExt<<endl;
 		inFiles.push_back(str);
 	}
 	
 	ii=argc-1;
 	string TxtDirO=string(argv[ii]);
 
-	cout<<"txt dir out"<<TxtDirO<<endl;
+	//cout<<"txt dir out"<<TxtDirO<<endl;
 	
 	string Otype=".tif";
 	
@@ -92,12 +92,12 @@ system("export TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
 			cout<<arg2<<endl;
 			system(arg2.c_str());
 		#else
-			string arg1="$IMPATH/convert " + img + " -threshold 25000 -depth 1 " + outI;
+			string arg1=ImPath + "/convert " + img + " -threshold 25000 -depth 1 " + outI;
 			cout<<arg1<<endl;
 			system(arg1.c_str());
 			//system call of tesseract to perform OCR on image
 			//tesseract must be installed for this to work
-			string arg2="TESSPATH/tesseract " + outI + " " + outT;
+			string arg2=TessPath + "/tesseract " + outI + " " + outT;
 			cout<<arg2<<endl;
 			system(arg2.c_str());
 		#endif

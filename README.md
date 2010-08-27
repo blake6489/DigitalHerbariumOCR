@@ -16,6 +16,10 @@ This code currently produces the binary `main` for either Ranger, or MY home env
 	$ make home  
 `main` converts the images in their original directory (you must have write permissions) and runs them through Tesseract, producing the OCRed output in the specified directory
 
+run the following command on Ranger to make `main` work correctly (you may need to change the path names)
+	$TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata
+	
+
 
 
 

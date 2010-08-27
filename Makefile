@@ -24,7 +24,7 @@ ranger:
 	#Path to ImageMagick binaries (on Ranger)
 	#MPATH=$(HOME)/ImageMagick-6.6.2-10/utilities
 	#Path to tesseract data files
-	#TESSDATA_PREFIX=$(HOME)/tesseract-2.04/tessdata
+	TESSDATA_PREFIX99=$(HOME)/tesseract-2.04/tessdata
 	$(CC) $(CPPFLAGS) $(PREPROS)$(YESRANGER) $(OUTFILE) $(INFILE)
 
 .EXPORT:
