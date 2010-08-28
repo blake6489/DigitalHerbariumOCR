@@ -17,14 +17,6 @@ home:
 	$(CC) $(CPPFLAGS) $(PREPROS)$(NORANGER) $(MLIBS) $(TIFFLIBS) $(OUTFILE) $(INFILE)
 
 ranger: 
-	#linked to in README
-	#DHOCR=$HOME
-	#Path to tesseract binaries (on Ranger)
-	#TESSPATH=
-	#Path to ImageMagick binaries (on Ranger)
-	#MPATH=$(HOME)/ImageMagick-6.6.2-10/utilities
-	#Path to tesseract data files
-	TESSDATA_PREFIX99=$(HOME)/tesseract-2.04/tessdata
 	$(CC) $(CPPFLAGS) $(PREPROS)$(YESRANGER) $(OUTFILE) $(INFILE)
 
 .EXPORT:

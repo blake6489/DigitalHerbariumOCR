@@ -36,7 +36,45 @@ string TessPath="$HOME/tesseract-2.04/bin";
 string ImPath="$HOME/ImageMagick-6.6.2-10/utilities";
 //system("TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
 #endif
+
 	vector<string> inFiles;
+	//parsing command input
+	bool convertYN=true;
+	bool verboseYN=false;
+	bool recYN=true;
+	string TxtDirO;
+    cout << argv[0];
+    for (int i = 1; i < argc; i++) { /* We will iterate over argv[] to get the parameters stored inside.
+                                      * Note that we're starting on 1 because we don't need to know the 
+                                      * path of the program, which is stored in argv[0] */
+        if (i + 1 != argc) // Check that we haven't finished parsing already
+            if (string(argv[i]) == "-i") {
+                // We know the next argument *should* be the filenames:
+                //while i<argc and next string dosnt start with minus sign
+                while(i<argc && string(argv[i+1]).substr(0,1)!="-"){
+                	++i;
+                	string str=string(argv[i]);
+					inFiles.push_back(str);
+                }
+            } else if (string(argv[i]) == "-o") {
+            	//output directory
+                TxtDirO = argv[i + 1];
+            } else if (string(argv[i]) == "-c") {
+                convertYN = true;
+            } else if (string(argv[i]) == "-r") {
+                recYN = true;
+            } else if (string(argv[i]) == "-v") {
+                verboseYN = true;
+            } else {
+                cout << "Not enough or invalid arguments, please try again.\n";
+                cout<< argv[i]<< " not recognised"<<endl;
+                sleep(2000); 
+                exit(0);
+        }
+        cout << argv[i] << " ";
+    }
+	
+	/*
 	
 	int ii=1;
 	for(int i=1;i<argc-1;++i){
@@ -51,9 +89,7 @@ string ImPath="$HOME/ImageMagick-6.6.2-10/utilities";
 		inFiles.push_back(str);
 	}
 	
-	ii=argc-1;
-	string TxtDirO=string(argv[ii]);
-
+	*/
 	//cout<<"txt dir out"<<TxtDirO<<endl;
 	
 	string Otype=".tif";
