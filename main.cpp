@@ -8,8 +8,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-//#include <fstream>
-//#include <cstring>
+#include <string>
+#include <ctime>
 #include <cstdlib>
 #include <stdlib.h>
 using namespace std;
@@ -24,18 +24,93 @@ using namespace std;
 #include "convert.h"
 #endif
 
+enum TLogLevel {logERROR, logWARNING, logINFO, logDEBUG, logDEBUG1,
+logDEBUG2, logDEBUG3, logDEBUG4};
+
+string NowTime(){
+	return "not a time";
+}
+
+string ToString(TLogLevel level){
+	string str;
+	switch(level){
+		case 1:
+			str="logERROR";
+			break;
+		case 2:
+			str="logWARNING";
+			break;
+		case 3:
+			str="logINFO";
+			break;
+		case 4:
+			str="logDEBUG";
+			break;
+		case 5:
+			str="logDEBUG1";
+			break;
+		case 6:
+			str="logDEBUG2";
+			break;
+		case 7:
+			str="logDEBUG3";
+			break;
+		case 8:
+			str="logDEBUG4";
+			break;
+		default:
+			str="INVALID LEVEL";
+			break;
+	}
+	return str;
+}
+
+
+
 //input many many images and one output directory
 int main(int argc, char **argv){
 	//tell me some things about this version
 	cout<<"DHOCR compiled on "<<__TIME__<<" "<<__DATE__<<" Rangerness="<<RANGER<<endl;
+	int LOGLEVEL=logINFO;
 
-//setup systen envoroment variables...
-//TODO this is hackish... wtf
-#if RANGER==1
-string TessPath="$HOME/tesseract-2.04/bin";
-string ImPath="$HOME/ImageMagick-6.6.2-10/utilities";
-//system("TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
-#endif
+	FILE * logFile;
+	
+	time_t rawtime;
+	struct tm * timeinfo;
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+  
+	cout<<rawtime<<endl;
+	
+	char date[9];
+	strftime(date,9,"%Y%m%d",timeinfo);
+	string logFileName=string(date)+string(".log");
+	logFile = fopen(logFileName.c_str(),"a");
+	if (logFile==NULL){
+		cout<<"!!!FAILED TO LOG!!!"<<endl;
+	}else{
+		cout<<"logging"<<endl;
+		char tmp [80];
+		strftime(tmp,80,"\n==========================\n======== %H:%M:%S ========\n",timeinfo);
+		fprintf(logFile,tmp);
+	}
+	
+	
+	if(LOGLEVEL>=logINFO){
+		time(&rawtime );
+		fprintf(logFile,"%d\tStarting DHOCR\n",rawtime);
+		
+	}
+	fclose (logFile);
+
+	//setup systen envoroment variables...
+	//TODO this is hackish... 
+	#if RANGER==1
+	string TessPath="$HOME/tesseract-2.04/bin";
+	string ImPath="$HOME/ImageMagick-6.6.2-10/utilities";
+	//system("TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
+	#endif
 
 	vector<string> inFiles;
 	//parsing command input
@@ -73,6 +148,8 @@ string ImPath="$HOME/ImageMagick-6.6.2-10/utilities";
         }
         cout << argv[i] << " ";
     }
+	
+
 	
 	/*
 	

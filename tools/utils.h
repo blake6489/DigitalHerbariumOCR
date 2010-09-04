@@ -36,8 +36,6 @@ vec5 operator * (  vec5  a,const float & b)
 	return a;
 }
 
-
-
 //returns string of file
 string fileRead(string file)
 {
