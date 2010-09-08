@@ -104,6 +104,7 @@ int main(int argc, char **argv){
 		time(&rawtime );
 		string lString = "%d\tStarting DHOCR\n";
 		fprintf(logFile,lString.c_str(),rawtime);
+		fflush(logFile);
 	}
 	
 
@@ -128,6 +129,7 @@ int main(int argc, char **argv){
 			lString += "          \t"+string(argv[i])+"\n";
 		}
 		fprintf(logFile,lString.c_str(),rawtime);
+		fflush(logFile);
 	}
     for (int i = 1; i < argc; i++) { 
 		/* We will iterate over argv[] to get the parameters stored inside.
@@ -159,6 +161,7 @@ int main(int argc, char **argv){
 					string lString = "%d\tNot enough or invalid arguments\n";
 					lString += "          \t%s not recognised\n";
 					fprintf(logFile,lString.c_str(),rawtime,argv[i]);
+					fflush(logFile);
 				}
 				sleep(2000); 
                 exit(0);
@@ -172,23 +175,46 @@ int main(int argc, char **argv){
 		string img=inFiles[i];
 		//cout<<ImgDirO+img.substr(0,img.length()-4)+".jpg"<<endl;
 		string outI=(img.substr(0,img.find_last_of('.'))+Otype);
-		cout<<img<<" "<<img.find_last_of('.')-img.find_last_of('/')<<endl;
+		//cout<<img<<" "<<img.find_last_of('.')-img.find_last_of('/')<<endl;
 		string outT=(TxtDirO+img.substr(img.find_last_of('/'),img.find_last_of('.')-img.find_last_of('/')));
 		
 		//this preprocessor stuff makes it work on tacc and on my home computer
 		#if RANGER==0
+			if(LOGLEVEL>=logINFO){
+				time(&rawtime );
+				string lString = "%d\tConverting %s\n";
+				fprintf(logFile,lString.c_str(),rawtime,img);
+				fflush(logFile);
+			}
 			int ee=convert(img,outI);
+			if(LOGLEVEL>=logINFO){
+				time(&rawtime );
+				string lString = "%d\tCalling Tesseract for %s\n";
+				fprintf(logFile,lString.c_str(),rawtime,img);
+				fflush(logFile);
+			}
 			string arg2="tesseract " + outI + " " + outT;
-			cout<<arg2<<endl;
 			system(arg2.c_str());
 		#else
+			if(LOGLEVEL>=logINFO){
+				time(&rawtime );
+				string lString = "%d\tConverting %s\n";
+				fprintf(logFile,lString.c_str(),rawtime,img);
+				fflush(logFile);
+			}
 			string arg1=ImPath + "/convert " + img + " -threshold 25000 -depth 1 " + outI;
-			cout<<arg1<<endl;
 			system(arg1.c_str());
+			
+			if(LOGLEVEL>=logINFO){
+				time(&rawtime );
+				string lString = "%d\tCalling Tesseract for %s\n";
+				fprintf(logFile,lString.c_str(),rawtime,img);
+				fflush(logFile);
+			}
 			//system call of tesseract to perform OCR on image
 			//tesseract must be installed for this to work
 			string arg2=TessPath + "/tesseract " + outI + " " + outT;
-			cout<<arg2<<endl;
+			//cout<<arg2<<endl;
 			system(arg2.c_str());
 		#endif
 	}
@@ -198,6 +224,7 @@ int main(int argc, char **argv){
 		time(&rawtime );
 		string lString = "%d\tEnding DHOCR\n";
 		fprintf(logFile,lString.c_str(),rawtime);
+		fflush(logFile);
 	}
 	
 	fclose (logFile);
