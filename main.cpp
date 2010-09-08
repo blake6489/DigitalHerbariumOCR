@@ -166,7 +166,7 @@ int main(int argc, char **argv){
 				sleep(2000); 
                 exit(0);
         }
-        cout << argv[i] << " ";
+        //cout << argv[i] << " ";
     }
 	
 	string Otype=".tif";
@@ -178,19 +178,21 @@ int main(int argc, char **argv){
 		//cout<<img<<" "<<img.find_last_of('.')-img.find_last_of('/')<<endl;
 		string outT=(TxtDirO+img.substr(img.find_last_of('/'),img.find_last_of('.')-img.find_last_of('/')));
 		
+		
 		//this preprocessor stuff makes it work on tacc and on my home computer
 		#if RANGER==0
 			if(LOGLEVEL>=logINFO){
 				time(&rawtime );
 				string lString = "%d\tConverting %s\n";
-				fprintf(logFile,lString.c_str(),rawtime,img);
+				fprintf(logFile,lString.c_str(),rawtime,img.c_str());
 				fflush(logFile);
 			}
+
 			int ee=convert(img,outI);
 			if(LOGLEVEL>=logINFO){
 				time(&rawtime );
-				string lString = "%d\tCalling Tesseract for %s\n";
-				fprintf(logFile,lString.c_str(),rawtime,img);
+				string lString = "%d\tTesseract for %s\n";
+				fprintf(logFile,lString.c_str(),rawtime,img.c_str());
 				fflush(logFile);
 			}
 			string arg2="tesseract " + outI + " " + outT;
@@ -199,7 +201,7 @@ int main(int argc, char **argv){
 			if(LOGLEVEL>=logINFO){
 				time(&rawtime );
 				string lString = "%d\tConverting %s\n";
-				fprintf(logFile,lString.c_str(),rawtime,img);
+				fprintf(logFile,lString.c_str(),rawtime,img.c_str());
 				fflush(logFile);
 			}
 			string arg1=ImPath + "/convert " + img + " -threshold 25000 -depth 1 " + outI;
@@ -208,7 +210,7 @@ int main(int argc, char **argv){
 			if(LOGLEVEL>=logINFO){
 				time(&rawtime );
 				string lString = "%d\tCalling Tesseract for %s\n";
-				fprintf(logFile,lString.c_str(),rawtime,img);
+				fprintf(logFile,lString.c_str(),rawtime,img.c_str());
 				fflush(logFile);
 			}
 			//system call of tesseract to perform OCR on image
@@ -222,7 +224,7 @@ int main(int argc, char **argv){
 	
 	if(LOGLEVEL>=logERROR){
 		time(&rawtime );
-		string lString = "%d\tEnding DHOCR\n";
+		string lString = "%d\tEnding DHOCR normally\n\n";
 		fprintf(logFile,lString.c_str(),rawtime);
 		fflush(logFile);
 	}
