@@ -24,8 +24,7 @@ using namespace std;
 #include "convert.h"
 #endif
 
-enum TLogLevel {logERROR, logWARNING, logINFO, logDEBUG, logDEBUG1,
-logDEBUG2, logDEBUG3, logDEBUG4};
+enum TLogLevel {logERROR, logWARNING, logINFO, logDEBUG, logDEBUG1, logDEBUG2, logDEBUG3, logDEBUG4};
 
 string NowTime(){
 	return "not a time";
@@ -71,38 +70,42 @@ string ToString(TLogLevel level){
 int main(int argc, char **argv){
 	//tell me some things about this version
 	cout<<"DHOCR compiled on "<<__TIME__<<" "<<__DATE__<<" Rangerness="<<RANGER<<endl;
-	int LOGLEVEL=logINFO;
+	
+	//Logging init
+	//logERROR, logWARNING, logINFO, logDEBUG, logDEBUG1,logDEBUG2, logDEBUG3, logDEBUG4
+	int LOGLEVEL=logDEBUG;
 
 	FILE * logFile;
-	
+	//time for logging
 	time_t rawtime;
 	struct tm * timeinfo;
-
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
   
 	cout<<rawtime<<endl;
 	
+	//opening logfile with name yearmonthday
 	char date[9];
 	strftime(date,9,"%Y%m%d",timeinfo);
 	string logFileName=string(date)+string(".log");
+	//open in 'append' method
 	logFile = fopen(logFileName.c_str(),"a");
 	if (logFile==NULL){
 		cout<<"!!!FAILED TO LOG!!!"<<endl;
 	}else{
 		cout<<"logging"<<endl;
 		char tmp [80];
-		strftime(tmp,80,"\n==========================\n======== %H:%M:%S ========\n",timeinfo);
+		strftime(tmp,80,"==========================\n======== %H:%M:%S ========\n",timeinfo);
 		fprintf(logFile,tmp);
 	}
 	
 	
-	if(LOGLEVEL>=logINFO){
+	if(LOGLEVEL>=logERROR){
 		time(&rawtime );
-		fprintf(logFile,"%d\tStarting DHOCR\n",rawtime);
-		
+		string lString = "%d\tStarting DHOCR\n";
+		fprintf(logFile,lString.c_str(),rawtime);
 	}
-	fclose (logFile);
+	
 
 	//setup systen envoroment variables...
 	//TODO this is hackish... 
@@ -118,10 +121,18 @@ int main(int argc, char **argv){
 	bool verboseYN=false;
 	bool recYN=true;
 	string TxtDirO;
-    cout << argv[0];
-    for (int i = 1; i < argc; i++) { /* We will iterate over argv[] to get the parameters stored inside.
-                                      * Note that we're starting on 1 because we don't need to know the 
-                                      * path of the program, which is stored in argv[0] */
+	if(LOGLEVEL>=logDEBUG){
+		time(&rawtime );
+		string lString = "%d\tAll input arguments\n";
+		for(int i=0;i<argc;++i){
+			lString += "          \t"+string(argv[i])+"\n";
+		}
+		fprintf(logFile,lString.c_str(),rawtime);
+	}
+    for (int i = 1; i < argc; i++) { 
+		/* We will iterate over argv[] to get the parameters stored inside.
+		* Note that we're starting on 1 because we don't need to know the 
+		* path of the program, which is stored in argv[0] */
         if (i + 1 != argc) // Check that we haven't finished parsing already
             if (string(argv[i]) == "-i") {
                 // We know the next argument *should* be the filenames:
@@ -143,54 +154,20 @@ int main(int argc, char **argv){
             } else {
                 cout << "Not enough or invalid arguments, please try again.\n";
                 cout<< argv[i]<< " not recognised"<<endl;
-                sleep(2000); 
+                if(LOGLEVEL>=logERROR){
+					time(&rawtime );
+					string lString = "%d\tNot enough or invalid arguments\n";
+					lString += "          \t%s not recognised\n";
+					fprintf(logFile,lString.c_str(),rawtime,argv[i]);
+				}
+				sleep(2000); 
                 exit(0);
         }
         cout << argv[i] << " ";
     }
 	
-
-	
-	/*
-	
-	int ii=1;
-	for(int i=1;i<argc-1;++i){
-		string str=string(argv[i]);
-		int lSlash=str.find_last_of('/');	//last slash
-		int lDot=str.find_last_of('.');		//last dot
-		string fileName=str.substr(lSlash+1,str.length()-lSlash-1);
-		string fileExt=str.substr(lDot,str.length()-lDot);
-		
-		//cout<<fileName<<endl;
-		//cout<<fileExt<<endl;
-		inFiles.push_back(str);
-	}
-	
-	*/
-	//cout<<"txt dir out"<<TxtDirO<<endl;
-	
 	string Otype=".tif";
-	
-	//string fileList=fileRead("/home/blake/Desktop/OCR/files.txt");
-	
-	/*int length=fileList.length();
-	int pos=0;
-	int pos2=1;
-	vector<string> fileArr;
-	int nnn=0;
-	while(5000>pos && nnn<1000000){
-		pos2=fileList.find(",",pos);
-		string file=fileList.substr(pos,pos2-pos);
-		fileArr.push_back(file);
-		//cout<<file<<" p:"<<pos<<" p2:"<<pos2<<endl;
-		pos=pos2+1;
-		++nnn;
-	}*/
-	
-	//vector<string> fileArr;
-	//fileArr.push_back("H1007818.cr2");
-	//cout<<"stuff"<<inFiles.size()<<endl;
-	
+		
 	for(int i=0;i<inFiles.size();++i){
 		string img=inFiles[i];
 		//cout<<ImgDirO+img.substr(0,img.length()-4)+".jpg"<<endl;
@@ -216,6 +193,14 @@ int main(int argc, char **argv){
 		#endif
 	}
 	
+	
+	if(LOGLEVEL>=logERROR){
+		time(&rawtime );
+		string lString = "%d\tEnding DHOCR\n";
+		fprintf(logFile,lString.c_str(),rawtime);
+	}
+	
+	fclose (logFile);
 
 	return 0;
 
