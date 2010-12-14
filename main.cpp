@@ -1,10 +1,4 @@
 
-
-//#include <xercesc/util/PlatformUtils.hpp>
-// Other include files, declarations, and non-Xerces-C++ initializations.
-
-//using namespace xercesc;
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -14,15 +8,17 @@
 #include <stdlib.h>
 using namespace std;
 
-//#include "ccmain/baseapi.h"
-
 #include "tools/distance.h"
-//#include "tools/loadTiff.cpp"
+
 #include "tools/UnsharpConfigs.h"
 #include "tools/utils.h"
 #if RANGER==0
 #include "convert.h"
 #endif
+
+//running on Ranger with:
+//H1122553.dng,H1144479.dng, H1123091.dng
+//main -i $HOME/input/H1123091.dng -o $HOME/output
 
 enum TLogLevel {logERROR, logWARNING, logINFO, logDEBUG, logDEBUG1, logDEBUG2, logDEBUG3, logDEBUG4};
 
@@ -113,6 +109,7 @@ int main(int argc, char **argv){
 	#if RANGER==1
 	string TessPath="$HOME/tesseract-2.04/bin";
 	string ImPath="$HOME/ImageMagick-6.6.2-10/utilities";
+	string RawPath="$HOME/dcraw";
 	//system("TESSDATA_PREFIX=$HOME/tesseract-2.04/tessdata");
 	#endif
 
@@ -174,6 +171,7 @@ int main(int argc, char **argv){
 	for(int i=0;i<inFiles.size();++i){
 		string img=inFiles[i];
 		//cout<<ImgDirO+img.substr(0,img.length()-4)+".jpg"<<endl;
+		string outRaw=(img.substr(0,img.find_last_of('.'))+Otype+"f");
 		string outI=(img.substr(0,img.find_last_of('.'))+Otype);
 		//cout<<img<<" "<<img.find_last_of('.')-img.find_last_of('/')<<endl;
 		string outT=(TxtDirO+img.substr(img.find_last_of('/'),img.find_last_of('.')-img.find_last_of('/')));
@@ -204,7 +202,11 @@ int main(int argc, char **argv){
 				fprintf(logFile,lString.c_str(),rawtime,img.c_str());
 				fflush(logFile);
 			}
-			string arg1=ImPath + "/convert " + img + " -threshold 25000 -depth 1 " + outI;
+			//Should check file dosnt exist yet
+			string arg=RawPath + "/dcraw -T " + img +  + outRaw;
+			system(arg.c_str());
+			
+			string arg1=ImPath + "/convert " + outRaw + " -threshold 25000 -depth 1 " + outI;
 			system(arg1.c_str());
 			
 			if(LOGLEVEL>=logINFO){
