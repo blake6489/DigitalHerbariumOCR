@@ -16,6 +16,9 @@ using namespace std;
 #include "convert.h"
 #endif
 
+//pull from git to ranger with
+//git pull git://github.com/blake6489/DigitalHerbariumOCR.git master
+
 //running on Ranger with:
 //H1122553.dng,H1144479.dng, H1123091.dng
 //main -i $HOME/input/H1123091.dng -o $HOME/output
@@ -198,31 +201,34 @@ int main(int argc, char **argv){
 		#else
 			if(LOGLEVEL>=logINFO){
 				time(&rawtime );
-				string lString = "%d\tConverting %s\n";
+				string lString = "%d\tConverting raw to tiff%s\n";
 				fprintf(logFile,lString.c_str(),rawtime,img.c_str());
 				fflush(logFile);
 			}
 			//Should check file dosnt exist yet
-			string arg=RawPath + "/dcraw -T " + img +  + outRaw;
+			string arg=RawPath + "/dcraw -T " + img ;
 			system(arg.c_str());
 			
+			if(LOGLEVEL>=logINFO){
+				time(&rawtime );
+				string lString = "%d\tConverting tiff to bw tif%s\n";
+				fprintf(logFile,lString.c_str(),rawtime,outRaw.c_str());
+				fflush(logFile);
+			}
 			string arg1=ImPath + "/convert " + outRaw + " -threshold 25000 -depth 1 " + outI;
 			system(arg1.c_str());
 			
 			if(LOGLEVEL>=logINFO){
 				time(&rawtime );
 				string lString = "%d\tCalling Tesseract for %s\n";
-				fprintf(logFile,lString.c_str(),rawtime,img.c_str());
+				fprintf(logFile,lString.c_str(),rawtime,outI.c_str());
 				fflush(logFile);
 			}
 			//system call of tesseract to perform OCR on image
-			//tesseract must be installed for this to work
 			string arg2=TessPath + "/tesseract " + outI + " " + outT;
-			//cout<<arg2<<endl;
 			system(arg2.c_str());
 		#endif
 	}
-	
 	
 	if(LOGLEVEL>=logERROR){
 		time(&rawtime );
